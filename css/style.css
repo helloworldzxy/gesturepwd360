@@ -1,4 +1,8 @@
+/*-------------------header-------------------------*/
+
+
 /*========信号，时间，电量==============*/
+
 .signal_bar {
     width: 100%;
     height: 80px;
@@ -27,8 +31,8 @@
     font-size: 30px;
     line-height: 80px;
 }
-.battery_svg{
-	width: 100px;
+.battery_svg {
+    width: 100px;
     height: 80px;
     background-image: url("../imgs/battery_80.svg");
     background-repeat: no-repeat;
@@ -36,6 +40,7 @@
 }
 
 /*========title:手势密码==============*/
+
 .title {
     width: 100%;
     height: 120px;
@@ -46,23 +51,39 @@
     border-bottom: 4px solid #ccc;
 }
 
+/*-------------------main-------------------------*/
 
+.gesture {
+    width: 100%;
+    height: 1000px;
+    background-color: #f0f0f2;
+}
 
+.paint{
+	width: 100%;
+	height: 800px;
 
+}
 
+.tip{
+	width: 100%;
+	height: 200px;
+	font-size: 50px;
+    line-height: 200px;
+    text-align: center;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.menu {
+    width: 100%;
+    height: 500px;
+    background-color: #aadcee;
+    font-size: 50px;
+    text-align: center;
+}
+.menu_item {
+    padding-top: 100px;
+}
+.menu_item label input {
+    width: 40px;
+    height: 40px;
+}
