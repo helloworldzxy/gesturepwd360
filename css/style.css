@@ -55,33 +55,39 @@
 
 .gesture {
     width: 100%;
-    height: 1000px;
+    height: 1100px;
     background-color: #f0f0f2;
 }
-
-.paint{
-	width: 100%;
-	height: 800px;
-
+.paint_div {
+    width: 100%;
+    height: 950px;
+    background-color: #bbbbee;
 }
-
-.tip{
-	width: 100%;
-	height: 200px;
-	font-size: 50px;
-    line-height: 200px;
+#paint_canvas {
+    background-color: #d1d9da;
+    width: 80%;
+    height: 80%;
+    margin: 90px;
+    overflow: hidden;
+    // position: relative;
+    // cursor: default;
+}
+.tip {
+    width: 100%;
+    height: 150px;
+    font-size: 50px;
+    line-height: 150px;
     text-align: center;
 }
-
 .menu {
     width: 100%;
-    height: 500px;
+    height: 400px;
     background-color: #aadcee;
     font-size: 50px;
     text-align: center;
 }
 .menu_item {
-    padding-top: 100px;
+    padding-top: 80px;
 }
 .menu_item label input {
     width: 40px;
