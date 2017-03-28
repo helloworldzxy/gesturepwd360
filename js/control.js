@@ -74,11 +74,11 @@ $canvasArea.on("touchstart touchmove", function(e) {
  var touchX = e.originalEvent.targetTouches[0].pageX - $canvasArea.offset().left,
  	 touchY = e.originalEvent.targetTouches[0].pageY - $canvasArea.offset().top;
 
- console.log("触摸点到屏幕左边的距离e.pageX: " + e.originalEvent.targetTouches[0].pageX);
- console.log("画布到屏幕左边的距离canvasArea.offset().left: " + $canvasArea.offset().left);
- console.log("触摸点到画布左边的距离= touchX(上面相减): " + touchX);
- console.log("圆心到画布左边的距离pList[0].x： " + pList[0].x);
- console.log("触摸点到圆心的距离touchX - pList[0].x: " + (touchX - pList[0].x));
+ console.log("1.触摸点到屏幕左边的距离e.pageX: " + e.originalEvent.targetTouches[0].pageX);
+ console.log("2.画布到屏幕左边的距离canvasArea.offset().left: " + $canvasArea.offset().left);
+ console.log("3.触摸点到画布左边的距离= touchX(1.-2.): " + touchX);
+ console.log("4.圆心到画布左边的距离pList[0].x： " + pList[0].x);
+ console.log("5.触摸点到圆心的距离touchX - pList[0].x: " + (touchX - pList[0].x));
 
  //判断(touchX,touchY)是否在圆内
  var inThePoint = isTouchInAPoint(touchX, touchY)
