@@ -65,9 +65,7 @@
 }
 #paint_canvas {
     background-color: #d1d9da;
-    width: 80%;
-    height: 80%;
-    margin: 90px;
+    margin: 30px;
     overflow: hidden;
     // position: relative;
     // cursor: default;

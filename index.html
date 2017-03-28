@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <title>gesture360</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/zepto.min.js"></script>
-    <script src="js/control.js"></script>
+    <!-- <script src="js/zepto.min.js"></script> -->
+    
 </head>
 
 <body>
@@ -21,34 +21,42 @@
         </div>
         <div class="title">手势密码</div>
     </div>
-
     <div id="main">
-    	<div class="gesture">
-    		<div class="paint_div">
-    			<canvas id="paint_canvas" class="paint_canvas">
-    				
-
-
-
-
-
-
-                    
-    			</canvas>
-    		</div>
-    		<div class="tip">
-    			请输入手势密码
-    		</div>
-    	</div>
-    	<div class="menu">
-    		<div class="menu_item">
-    			<label><input name="OperationMenu" type="radio" value="setPWD" />设置密码</label> 
-    		</div>
-    		<div class="menu_item">
-    			<label><input name="OperationMenu" type="radio" value="vertifyPWD" />验证密码</label> 
-    		</div>
-    	</div>
+        <div class="gesture">
+            <div class="paint_div">
+                <canvas id="paint_canvas" width="900" height="900">
+                </canvas>
+                <!-- <canvas id="myCanvas" width="300" height="150" style="border:1px solid #d3d3d3;">
+                    Your browser does not support the HTML5 canvas tag.
+                </canvas> -->
+            </div>
+            <div class="tip">
+                请输入手势密码
+            </div>
+        </div>
+        <div class="menu">
+            <div class="menu_item">
+                <label>
+                    <input name="OperationMenu" type="radio" value="setPWD" />设置密码</label>
+            </div>
+            <div class="menu_item">
+                <label>
+                    <input name="OperationMenu" type="radio" value="vertifyPWD" />验证密码</label>
+            </div>
+        </div>
     </div>
+
+    <script src="js/jquery-2.1.4.min.js"></script>
+
+    <script src="js/control.js"></script>
+    <script>
+        //test
+// var c = document.getElementById("myCanvas");
+// var ctx=c.getContext("2d");
+// ctx.beginPath();
+// ctx.arc(100,75,50,0,2*Math.PI);
+// ctx.stroke();
+    </script>
 </body>
 
 </html>
