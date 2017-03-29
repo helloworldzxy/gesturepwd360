@@ -30,7 +30,38 @@ a UI component for 360 Front-End Star Plan
 
     该数组保存的是Point对象，每次touchmove事件被触发时，都会判断一次inWhichPoint,而这个函数会返回所在的Point（每次进入这个圆都会新产生一个Point对象返回），假如这个圆已经在轨迹中出现过，则这个新产生Point对象和已加入数组的那个Point对象虽然key-value对完全相同，但是它们不是同一个对象，所以不能用indexOf()来判断数组中是否已存在该Point对象。=>改写判断方法。
 
+3. 问题描述：将设置的密码存入localStorage中，原本存储触摸点用的是touchList数组，但是localStorage只能存储字符串。
 
+    将存储数组转化成JSON再存。
+
+    [使用sessionStorage、localStorage存储数组与对象](https://my.oschina.net/crazymus/blog/371757)
+
+4. 问题描述：如何清空画布，重绘
+    ```javascript
+    //下面前三个都不管用，方法四可以。
+
+    //方法一：
+    ctx.save(); 
+    ctx.restore();
+
+    //方法二：
+    var imageData = ctx.getImageData(x , y, ctx.width, ctx,height);
+    ctx.putImage(imageData, x, y);
+    //方法二报错为：control.js:59 Uncaught TypeError: Failed to execute 'getImageData' on 'CanvasRenderingContext2D': The provided double value is non-finite.
+
+    [stackoverflow相关解答](http://stackoverflow.com/questions/26688168/uncaught-securityerror-failed-to-execute-getimagedata-on-canvasrenderingcont)
+
+    //方法三：直接重新绘制，调用initDraw(),扔无变化
+
+    //方法四：重新绘制，但是在调用initDraw()之前，重新设置ctx笔触属性
+    ctx.fillStyle = "#ffffff";  
+    ctx.beginPath();  
+    ctx.fillRect(0, 0, canvasArea.width, canvasArea.height);  
+    ctx.closePath();  
+    initDraw();
+    ```
+
+    随之而来的问题：重绘成功后，再画的连线会留下上一次线段的痕迹。=> 重绘时应清空setArrStorage数组(因为是全局的)。
 
 
 
