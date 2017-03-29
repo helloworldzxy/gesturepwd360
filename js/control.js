@@ -25,6 +25,11 @@ var touchList = [];
 //存储设置的密码
 var setArrStorage = [];
 
+/** 用于设置密码时的重复确认输入密码(输入小于5位时不考虑)：
+ *   初始值->0, 第一次合法设置->1->提示再次输入密码以确认，第二次合法设置并且和第一次相同->2->可以保存，第二次合法设置但和第一次设置不相同->3->清空，重设
+ **/
+var setPWDTimes = 0;
+
 function Point(x, y) {
     this.x = x;
     this.y = y;
@@ -59,18 +64,18 @@ initDraw();
 
 
 //清空画布，恢复初始图案状态
-function restoreCanvasToInit(){
-	console.log("your canvas will be restored to initial state~");
+function restoreCanvasToInit() {
+    console.log("your canvas will be restored to initial state~");
 
-	var msg = "请输入手势密码";
-	$(".tip").text(msg);
+    var msg = "请输入手势密码";
+    $(".tip").text(msg);
 
-	//重绘
-	ctx.fillStyle="#ffffff";  
-    ctx.beginPath();  
-    ctx.fillRect(0, 0, canvasArea.width, canvasArea.height);  
-    ctx.closePath();  
-	initDraw();
+    //重绘
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.fillRect(0, 0, canvasArea.width, canvasArea.height);
+    ctx.closePath();
+    initDraw();
 
 }
 
@@ -206,53 +211,109 @@ function setPWDHandler(e) {
 };
 
 function setPWDEndHandler() {
-	
+
     console.log("touchend~");
 
     if (setArrStorage.length < 5) {
         var msg = "密码太短，至少需要5个点";
         $(".tip").text(msg);
 
+        //清空痕迹数组
         setArrStorage.splice(0, setArrStorage.length);
-
+        //重绘canvas
         setTimeout(restoreCanvasToInit, 2000);
 
 
-    } else {
-        var setArrStorageJSON = JSON.stringify(setArrStorage);
-        localStorage["setpwd"] = setArrStorageJSON;
-        console.log(localStorage["setpwd"]);
+    } else if ((setArrStorage.length >= 5) && (setPWDTimes === 0)) { //第一次合法设置成功，需要重复设置密码以确认
+
+        var msg = "请再次输入密码以确认";
+        $(".tip").text(msg);
+
+        //记录本次(第一次)设置的密码
+        //localStorage只能存储字符串形式，不能直接存储数组或对象，所以要用json转化一下
+        var setArrStorageJSON1 = JSON.stringify(setArrStorage);
+        localStorage["setpwd1"] = setArrStorageJSON1;
+        console.log("first set succeeded as below~pls set it again~");
+        console.log(localStorage["setpwd1"]);
+
+        //第一次合法设置成功
+        setPWDTimes = 1;
+
+        //清空痕迹数组
+        setArrStorage.splice(0, setArrStorage.length);
+        //重绘canvas
+        setTimeout(restoreCanvasToInit, 2000);
+
+    } else if ((setArrStorage.length >= 5) && (setPWDTimes === 1)) { //确认输入密码，并且两次输入密码相同后，才可以存储到localStorage
+
+        //比较两次设置是否一致：数量，顺序
+        var setArrStorageJSON2 = JSON.stringify(setArrStorage);
+
+        if (localStorage["setpwd1"] == setArrStorageJSON2) { //成功设置，可以清除第一次设置时的存储
+
+        	var msg = "成功设置密码";
+        	$(".tip").text(msg);
+
+            localStorage["setpwd2"] = setArrStorageJSON2;
+
+            //清空痕迹数组
+            setArrStorage.splice(0, setArrStorage.length);
+            //重绘canvas
+            setTimeout(restoreCanvasToInit, 2000);
+
+            console.log("second set succeeded as below~ Read Set succeeded~~");
+            console.log(localStorage["setpwd2"]);
+
+        } else { //两次设置不相等
+            var msg = "两次输入不一致，请重新输入"
+            $(".tip").text(msg);
+
+            //清除第一次设置的localStorage
+            localStorage.removeItem("setpwd1");
+
+            //清空痕迹数组
+            setArrStorage.splice(0, setArrStorage.length);
+            //重绘canvas
+            setTimeout(restoreCanvasToInit, 2000);
+
+            setPWDTimes = 0;
+
+        }
+
     }
 
-}
+} //endof setPWDEndHandler
 
 
 //事件代理/事件委托
 $(".menu_item").on("click", "input", function() {
+
     var menu = $("input[name='OperationMenu']").filter(":checked").attr("value");
     console.log(menu + "clicked!");
+
     if (menu === "setPWD") { //设置密码
         console.log("you are setting PWD~");
 
+        $(canvasArea).off("touchmove", verifyPWDHandler);
+        $(canvasArea).off("touchend", verifyPWDEndHandler);
 
         $(canvasArea).on("touchmove", setPWDHandler);
-
         $(canvasArea).on("touchend", setPWDEndHandler);
 
 
-
-    } else { //验证密码
+    } else if(menu === "verifyPWD") { //验证密码
         console.log("you are vertifying PWD~");
 
-
         $(canvasArea).off("touchmove", setPWDHandler);
-
         $(canvasArea).off("touchend", setPWDEndHandler);
+
+        $(canvasArea).on("touchmove", verifyPWDHandler);
+        $(canvasArea).on(:"touchend", verifyPWDEndHandler);
 
     }
 });
 
 
-$(document).ready(function(){
-	$("#setPWDradio").click();
+$(document).ready(function() {
+    $("#setPWDradio").click();
 });
