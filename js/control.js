@@ -99,69 +99,6 @@ function touchedBefore(point, touchList) {
     return false;
 }
 
-//手势的基本功能模块code backup(未区分set/verify两种工作模式之前的代码)
-// $canvasArea.on("touchmove", function(e) {
-
-//     //阻止默认事件（滑动）
-//     e.preventDefault();
-
-//     //获取触摸点到画布左边的距离(因为圆心的坐标就是相对于画布左边的)，便于判断是否在圆内以及连线
-//     var touchX = e.originalEvent.targetTouches[0].pageX - $canvasArea.offset().left,
-//         touchY = e.originalEvent.targetTouches[0].pageY - $canvasArea.offset().top;
-
-//     // console.log("1.触摸点到屏幕左边的距离e.pageX: " + e.originalEvent.targetTouches[0].pageX);
-//     // console.log("2.画布到屏幕左边的距离canvasArea.offset().left: " + $canvasArea.offset().left);
-//     // console.log("3.触摸点到画布左边的距离= touchX(1.-2.): " + touchX);
-//     // console.log("4.圆心到画布左边的距离pList[0].x： " + pointList[0].x);
-//     // console.log("5.触摸点到圆心的距离touchX - pointList[0].x: " + (touchX - pointList[0].x));
-
-//     var inWhichPoint = isTouchInAPoint(touchX, touchY);
-//     if (inWhichPoint) { //如果在某个圆内
-//         // console.log("in the point");
-//         // console.log(inWhichPoint);
-
-//         //把所点圆圈存入数组
-//         // console.log("is this point added to touchList? " + touchList.indexOf(inWhichPoint));
-//         if (touchList.length == 0) { //轨迹第一个圆
-//             touchList.push(inWhichPoint);
-//         } else if (!touchedBefore(inWhichPoint, touchList)) { //该圆尚不存在于该轨迹中
-//             touchList.push(inWhichPoint);
-//         }
-
-//         // console.log("touchList.length: " + touchList.length);
-//         // console.log(touchList);
-
-//         //给所选圆圈填色
-
-//         ctx.strokeStyle = "#ffa726";
-//         ctx.lineWidth = 2;
-//         ctx.beginPath();
-//         ctx.arc(inWhichPoint.x, inWhichPoint.y, r, 0, 2 * Math.PI);
-//         ctx.fillStyle = "#ffa726";
-//         ctx.fill();
-//         // ctx.lineTo(0,0);
-//         // ctx.stroke();
-
-//         /**	仅触摸的第一个圆圈用moveTo
-//          * 	其他后续的都用lineTo
-//          *	所以需要记录触摸了几个圆圈 => touchList数组
-//          **/
-//         var touchLen = touchList.length;
-//         for (var i = 0; i < touchLen; i++) {
-//             if (i == 0) {
-//                 ctx.beginPath();
-//                 ctx.moveTo(touchList[0].x, touchList[0].y);
-//                 ctx.strokeStyle = "#d04839";
-
-//             } else {
-//                 ctx.lineTo(touchList[i].x, touchList[i].y);
-//             }
-//         }
-//     } //end if(inWitchPoint)
-
-//     ctx.stroke();
-// }); //endof touchmove event listener
-
 function setPWDHandler(e) {
     //阻止默认事件（滑动）
     e.preventDefault();
@@ -212,7 +149,7 @@ function setPWDHandler(e) {
 
 function setPWDEndHandler() {
 
-    console.log("touchend~");
+    console.log("setPWDEndHandler touchend~");
 
     if (setArrStorage.length < 5) {
         var msg = "密码太短，至少需要5个点";
@@ -221,7 +158,7 @@ function setPWDEndHandler() {
         //清空痕迹数组
         setArrStorage.splice(0, setArrStorage.length);
         //重绘canvas
-        setTimeout(restoreCanvasToInit, 2000);
+        setTimeout(restoreCanvasToInit, 1000);
 
 
     } else if ((setArrStorage.length >= 5) && (setPWDTimes === 0)) { //第一次合法设置成功，需要重复设置密码以确认
@@ -242,7 +179,7 @@ function setPWDEndHandler() {
         //清空痕迹数组
         setArrStorage.splice(0, setArrStorage.length);
         //重绘canvas
-        setTimeout(restoreCanvasToInit, 2000);
+        setTimeout(restoreCanvasToInit, 1000);
 
     } else if ((setArrStorage.length >= 5) && (setPWDTimes === 1)) { //确认输入密码，并且两次输入密码相同后，才可以存储到localStorage
 
@@ -251,15 +188,17 @@ function setPWDEndHandler() {
 
         if (localStorage["setpwd1"] == setArrStorageJSON2) { //成功设置，可以清除第一次设置时的存储
 
-        	var msg = "成功设置密码";
-        	$(".tip").text(msg);
+            var msg = "成功设置密码";
+            $(".tip").text(msg);
 
+            //清除第一次设置的localStorage
+            localStorage.removeItem("setpwd1");
             localStorage["setpwd2"] = setArrStorageJSON2;
 
             //清空痕迹数组
             setArrStorage.splice(0, setArrStorage.length);
             //重绘canvas
-            setTimeout(restoreCanvasToInit, 2000);
+            setTimeout(restoreCanvasToInit, 1000);
 
             console.log("second set succeeded as below~ Read Set succeeded~~");
             console.log(localStorage["setpwd2"]);
@@ -274,7 +213,7 @@ function setPWDEndHandler() {
             //清空痕迹数组
             setArrStorage.splice(0, setArrStorage.length);
             //重绘canvas
-            setTimeout(restoreCanvasToInit, 2000);
+            setTimeout(restoreCanvasToInit, 1000);
 
             setPWDTimes = 0;
 
@@ -284,6 +223,22 @@ function setPWDEndHandler() {
 
 } //endof setPWDEndHandler
 
+function vertifyPWDEndHandler() {
+    console.log("verifyEndHandler touchend~");
+
+    var setArrStorageJSON3 = JSON.stringify(setArrStorage);
+    if (setArrStorage.length < 5 || (localStorage["setpwd2"] != setArrStorageJSON3)) {
+        var msg = "输入的密码不正确";
+    } else if (localStorage["setpwd2"] == setArrStorageJSON3) {
+        var msg = "密码正确";
+
+    }
+    $(".tip").text(msg); //清空痕迹数组
+    setArrStorage.splice(0, setArrStorage.length);
+    //重绘canvas
+    setTimeout(restoreCanvasToInit, 1000);
+}
+
 
 //事件代理/事件委托
 $(".menu_item").on("click", "input", function() {
@@ -291,24 +246,22 @@ $(".menu_item").on("click", "input", function() {
     var menu = $("input[name='OperationMenu']").filter(":checked").attr("value");
     console.log(menu + "clicked!");
 
+    $(canvasArea).on("touchmove", setPWDHandler);
+
     if (menu === "setPWD") { //设置密码
         console.log("you are setting PWD~");
 
-        $(canvasArea).off("touchmove", verifyPWDHandler);
-        $(canvasArea).off("touchend", verifyPWDEndHandler);
+        $(canvasArea).off("touchend", vertifyPWDEndHandler);
 
-        $(canvasArea).on("touchmove", setPWDHandler);
         $(canvasArea).on("touchend", setPWDEndHandler);
 
 
-    } else if(menu === "verifyPWD") { //验证密码
+    } else if (menu === "vertifyPWD") { //验证密码
         console.log("you are vertifying PWD~");
 
-        $(canvasArea).off("touchmove", setPWDHandler);
         $(canvasArea).off("touchend", setPWDEndHandler);
 
-        $(canvasArea).on("touchmove", verifyPWDHandler);
-        $(canvasArea).on(:"touchend", verifyPWDEndHandler);
+        $(canvasArea).on("touchend", vertifyPWDEndHandler);
 
     }
 });
