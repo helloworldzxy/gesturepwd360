@@ -71,7 +71,7 @@ function restoreCanvasToInit() {
     $(".tip").text(msg);
 
     //重绘
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = "#f0f0f2"; //和#main的背景色相同
     ctx.beginPath();
     ctx.fillRect(0, 0, canvasArea.width, canvasArea.height);
     ctx.closePath();
@@ -170,6 +170,7 @@ function setPWDEndHandler() {
         //localStorage只能存储字符串形式，不能直接存储数组或对象，所以要用json转化一下
         var setArrStorageJSON1 = JSON.stringify(setArrStorage);
         localStorage["setpwd1"] = setArrStorageJSON1;
+
         console.log("first set succeeded as below~pls set it again~");
         console.log(localStorage["setpwd1"]);
 
@@ -202,6 +203,8 @@ function setPWDEndHandler() {
 
             console.log("second set succeeded as below~ Read Set succeeded~~");
             console.log(localStorage["setpwd2"]);
+
+            setPWDTimes = 0;
 
         } else { //两次设置不相等
             var msg = "两次输入不一致，请重新输入"

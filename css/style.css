@@ -3,72 +3,73 @@
 
 /*========信号，时间，电量==============*/
 
-.signal_bar {
-    width: 100%;
-    height: 80px;
-    // background-color: grey;
-}
-.signal_svg {
-    width: 100px;
-    height: 80px;
-    margin-left: 10px;
-    background-image: url("../imgs/signal_80.svg");
-    background-repeat: no-repeat;
-    float: left;
-}
-.cnmobile {
-    width: 120px;
-    height: 80px;
-    line-height: 80px;
-    font-size: 30px;
-    float: left;
-}
-.clock_time {
-    width: 200px;
-    height: 80px;
-    float: left;
-    margin-left: 192px;
-    font-size: 30px;
-    line-height: 80px;
-}
-.battery_svg {
-    width: 100px;
-    height: 80px;
-    background-image: url("../imgs/battery_80.svg");
-    background-repeat: no-repeat;
-    float: right;
-}
+// .signal_bar {
+//     width: 100%;
+//     height: 80px;
+//     // background-color: grey;
+// }
+// .signal_svg {
+//     width: 100px;
+//     height: 80px;
+//     margin-left: 10px;
+//     background-image: url("../imgs/signal_80.svg");
+//     background-repeat: no-repeat;
+//     float: left;
+// }
+// .cnmobile {
+//     width: 120px;
+//     height: 80px;
+//     line-height: 80px;
+//     font-size: 30px;
+//     float: left;
+// }
+// .clock_time {
+//     width: 200px;
+//     height: 80px;
+//     float: left;
+//     margin-left: 192px;
+//     font-size: 30px;
+//     line-height: 80px;
+// }
+// .battery_svg {
+//     width: 100px;
+//     height: 80px;
+//     background-image: url("../imgs/battery_80.svg");
+//     background-repeat: no-repeat;
+//     float: right;
+// }
 
 /*========title:手势密码==============*/
 
-.title {
-    width: 100%;
-    height: 120px;
-    //background-color: yellow;
-    text-align: center;
-    font-size: 60px;
-    line-height: 120px;
-    border-bottom: 4px solid #ccc;
-}
+// .title {
+//     width: 100%;
+//     height: 120px;
+//     text-align: center;
+//     font-size: 60px;
+//     line-height: 120px;
+//     border-bottom: 4px solid #ccc;
+// }
 
-/*-------------------main-------------------------*/
+/*=================main========================*/
+#main{
+    background-color: #f0f0f2;
+    height: 1750px; /* 应该响应式*/ 
+}
 
 .gesture {
     width: 100%;
-    height: 1100px;
-    background-color: #f0f0f2;
+    height: 1300px;
+    // background-color: #f0f0f2;
 }
 .paint_div {
     width: 100%;
-    height: 950px;
-    background-color: #bbbbee;
+    height: 1100px;
+    // background-color: #bbbbee;
 }
 #paint_canvas {
-    background-color: #d1d9da;
+    // background-color: #d1d9da;
     margin: 30px;
     overflow: hidden;
-    // position: relative;
-    // cursor: default;
 }
 .tip {
     width: 100%;
@@ -79,13 +80,13 @@
 }
 .menu {
     width: 100%;
-    height: 400px;
-    background-color: #aadcee;
+    height: 300px;
+    // background-color: #aadcee;
     font-size: 50px;
     text-align: center;
 }
 .menu_item {
-    padding-top: 80px;
+    padding-top: 60px;
 }
 .menu_item label input {
     width: 40px;
