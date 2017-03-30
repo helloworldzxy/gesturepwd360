@@ -79,6 +79,8 @@ a UI component for 360 Front-End Star Plan
 
 5. 发布时应注释掉所有的console.log以提高性能。
 
+6. 注意在PC端设置的字体在移动端显示效果可能会不一样。如Cursive。
+
 #### 后期计划
 
 因为赶进度主要为了跑通逻辑，还有很多地方需要完善。
