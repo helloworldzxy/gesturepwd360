@@ -65,7 +65,11 @@ a UI component for 360 Front-End Star Plan
 
 #### 3.30 实现验证密码功能
 
-#### 因为赶进度主要为了跑通逻辑，没用zepto.js，直接用的熟悉的jQuery,后期需要优化代码，尝试用除了jQuery之外的适合移动端的库重构代码，以及界面布局响应式设计。
+#### 其他
+    
+    演示: https://helloworldzxy.github.io/gesturepwd360/
+
+    后期计划：因为赶进度主要为了跑通逻辑，没用zepto.js，直接用的熟悉的jQuery,后期需要优化代码，尝试用除了jQuery之外的适合移动端的库重构代码，以及界面布局响应式设计。
 
 
 
