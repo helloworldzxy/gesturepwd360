@@ -136,7 +136,7 @@ function setPWDHandler(e) {
                 ctx.beginPath();
                 ctx.moveTo(setArrStorage[0].x, setArrStorage[0].y);
                 ctx.strokeStyle = "#d04839";
-
+                ctx.lineWidth = 5;
             } else {
                 ctx.lineTo(setArrStorage[i].x, setArrStorage[i].y);
             }
