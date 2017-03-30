@@ -1,9 +1,12 @@
 # gesturepwd360
 a UI component for 360 Front-End Star Plan
 
+### 演示: https://helloworldzxy.github.io/gesturepwd360/
+
 ### 进度、遇到的困难及解决办法
-#### 3.27  2h     实现除paint_canvas外的页面基本布局，了解zepto.js 
-#### 3.28  3.5h   完成手势解锁的初始界面绘制，实现触摸的目标圆圈并填充目标圆圈颜色的功能。
+#### 3.27  实现除paint_canvas外的页面基本布局，了解zepto.js 
+#### 3.28  完成手势解锁的初始界面绘制，实现触摸的目标圆圈并填充目标圆圈颜色的功能。
+
 1. 问题描述：无法正常识别触摸的目标圆圈
 
     思路：获取触摸点到canvas左边界的距离，依次与9个圆心到canvas左边距的距离进行比较，若在圆内，则再次绘制该圆，并填充颜色。
@@ -37,6 +40,7 @@ a UI component for 360 Front-End Star Plan
     [使用sessionStorage、localStorage存储数组与对象](https://my.oschina.net/crazymus/blog/371757)
 
 4. 问题描述：如何清空画布，重绘
+
     ```javascript
     //下面前三个都不管用，方法四可以。
 
@@ -51,7 +55,7 @@ a UI component for 360 Front-End Star Plan
 
     [stackoverflow相关解答](http://stackoverflow.com/questions/26688168/uncaught-securityerror-failed-to-execute-getimagedata-on-canvasrenderingcont)
 
-    //方法三：直接重新绘制，调用initDraw(),扔无变化
+    //方法三：直接重新绘制，调用initDraw(),仍无变化
 
     //方法四：重新绘制，但是在调用initDraw()之前，重新设置ctx笔触属性
     ctx.fillStyle = "#ffffff";  
@@ -63,13 +67,25 @@ a UI component for 360 Front-End Star Plan
 
     随之而来的问题：重绘成功后，再画的连线会留下上一次线段的痕迹。=> 重绘时应清空setArrStorage数组(因为是全局的)。
 
-#### 3.30 实现验证密码功能
+#### 3.30 实现验证密码功能；整体功能完善（逻辑，布局）。
 
-#### 其他
-    
-    演示: https://helloworldzxy.github.io/gesturepwd360/
+1. 问题：设置密码时，前两次设置成功后，第三次输入应视作重新设置新密码来处理，而不是提示再次确认输入。=> 设置密码成功的处理逻辑中重置`setPWDTimes = 0;`回到初始状态即可。
 
-    后期计划：因为赶进度主要为了跑通逻辑，没用zepto.js，直接用的熟悉的jQuery,后期需要优化代码，尝试用除了jQuery之外的适合移动端的库重构代码，以及界面布局响应式设计。
+2. 最上面的信号栏不需要自己实现。移动端经验不足。
+
+3. 问题：只触摸不滑动的时候应该也点亮按钮。=> touchmove绑定事件的地方加上touchstart一起绑定。
+
+4. 问题：setPWD的touchstart，如果在圆圈按钮外部点击，应该不触发任何操作。=> 设置全局变量clickedInPoint，初始化为false。只有单击在圆内(也即inWhichPoint有返回值时)才赋值true，在setPWDEndHandler和vertifyPWDEndHandler内部都检测该值后再操作。
+
+5. 发布时应注释掉所有的console.log以提高性能。
+
+#### 后期计划
+
+因为赶进度主要为了跑通逻辑，还有很多地方需要完善。
+
+- 这次我直接用的熟悉的jQuery，因为是面向移动端，应尝试用zepto.js重构，后者更轻量级。
+- 代码优化。
+- 界面布局响应式设计。
 
 
 
